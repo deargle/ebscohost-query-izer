@@ -28,7 +28,7 @@
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "sass": "sass --watch src/ dist/",
-    "deploy": "gh-pages -d dist"
+    "deploy": "webpack && gh-pages -d dist"
   },
   "devDependencies": {
     "webpack-cli": "^4.6.0",
