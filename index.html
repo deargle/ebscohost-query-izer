@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <title>Ebscohost Query Maker</title>
-  <script defer src="main.js?dbca87d455865e80f769"></script><link href="index.css?dbca87d455865e80f769" rel="stylesheet"></head>
+  <script defer src="main.js?6798a37086bd352bb120"></script><link href="index.css?6798a37086bd352bb120" rel="stylesheet"></head>
   <body>
     <div class="container">
       <h1>Ebscohost Query Maker</h1>
@@ -21,7 +21,6 @@
       FT-50 journal list</a>.  It can optionally also include several other
       journals from the <a
       href="https://aisnet.org/page/SeniorScholarBasket">AIS-8</a>.</p>
-
 
       <p>This tool uses EBSCOHOST's <em>Business Source Complete</em> database. (See <a
       href="https://connect.ebsco.com/s/article/EBSCOhost-Database-Short-Names-List?language=en_US">here</a>
@@ -39,74 +38,78 @@
 
       <div v-cloak class="" id='app'>
 
-        <div class="">
 
           <p>For a direct link to ebscohost Business Source Complete database, see <a :href="baseurl">here</a>. You will have to authenticate through whatever means you have available.</p>
 
-          <h3>Journals</h3>
+          <div class="mb-3">
 
-          <p>Check the box below to customize journals to include in the search. By default, journals in the FT-50 are selected.</p>
+            <h3>Journals</h3>
+
+            <p>Check the box below to customize journals to include in the search. By default, journals in the FT-50 are selected.</p>
 
 
-          <input type="checkbox" id="checkbox" v-model="expand_journal_list">
-          <label for="checkbox">Expand journal list</label>
+            <input type="checkbox" id="checkbox" v-model="expand_journal_list">
+            <label for="checkbox">Expand journal list</label>
 
-          <div v-if="expand_journal_list">
+            <div v-if="expand_journal_list">
 
-            <button type="button" name="button" v-on:click="select_all">(all)</button> |
-            <button type="button" name="button" v-on:click="select_none">(none)</button> |
-            <button type="button" name="button" v-on:click="select_ft_50">FT-50 (default)</button> |
-            <button type="button" name="button" v-on:click="select_ais_8">AIS-8 (except JSIS<sup>*</sup>)</button>
+              <button type="button" name="button" v-on:click="select_all">(all)</button> |
+              <button type="button" name="button" v-on:click="select_none">(none)</button> |
+              <button type="button" name="button" v-on:click="select_ft_50">FT-50 (default)</button> |
+              <button type="button" name="button" v-on:click="select_ais_8">AIS-8 (except JSIS<sup>*</sup>)</button>
 
-            <small><sup>*</sup>JSIS is not included in EBSCO's business source complete database!</small>
+              <small><sup>*</sup>JSIS is not included in EBSCO's business source complete database!</small>
 
-            <ul id="example-1">
-              <li v-for="journal in journals" :key="journal.ebsco_journal_name">
-                <input
-                  type="checkbox"
-                  :id="journal.journal_name_ebsco"
-                  :value="journal"
-                  v-model="filtered_journals"
-                  checked
-                  >
-                <label :for="journal.journal_name_ebsco">{{ journal.journal_name_display }}</label>
-              </li>
-            </ul>
+              <ul id="example-1">
+                <li v-for="journal in journals" :key="journal.ebsco_journal_name">
+                  <input
+                    type="checkbox"
+                    :id="journal.journal_name_ebsco"
+                    :value="journal"
+                    v-model="filtered_journals"
+                    checked
+                    >
+                  <label :for="journal.journal_name_ebsco">{{ journal.journal_name_display }}</label>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
-        <p><small></small></p>
+          <div class="mb-3">
 
-        </div>
+            <h3>Keywords</h3>
+            <p>Optionally, include keywords to search for. This tool will create a query that searches for papers that include the term either in the article title, abstract, or keywords.</p>
 
-        <h3>Keywords</h3>
-        <p>Optionally, include keywords to search for. This tool will create a query that searches for papers that include the term either in the article title, abstract, or keywords.</p>
+            <div class="">
+              <ul class="list-group" id="keywords">
+                <li class="list-group-item" v-for="(keyword, index) in keywords" :key="keyword">
+                  {{ keyword }}
+                  <button type="button" class="close" aria-label="Close" v-on:click="delete_keyword(index)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </li>
+              </ul>
+              <form v-on:submit.prevent="add_keyword">
+                <input v-model="new_keyword" placeholder="new keyword">
+                <button
+                  :disabled="!!!new_keyword"
+                  type="submit"
+                  name="button"
+                  >Add</button>
+              </form>
+            </div>
 
-        <div class="">
-          <ul class="list-group" id="keywords">
-            <li class="list-group-item" v-for="(keyword, index) in keywords" :key="keyword">
-              {{ keyword }}
-              <button type="button" class="close" aria-label="Close" v-on:click="delete_keyword(index)">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </li>
-          </ul>
-          <form v-on:submit.prevent="add_keyword">
-            <input v-model="new_keyword" placeholder="new keyword">
-            <button
-              :disabled="!!!new_keyword"
-              type="submit"
-              name="button"
-              >Add</button>
-          </form>
-        </div>
+          </div>
 
-        <div class="">
+
+        <div class="mb-3">
           <h3>Query</h3>
           <p>Copy the query. Then, go to business source complete and paste in the query.</p>
 
           <div class="">
-            <p><button type="button" name="button" class='btn btn-outline-primary' v-on:click="copy_to_clipboard">Copy query to clipboard</button> <span v-if="copied">Copied!</span></p>
             <p><code>{{ bquery }}</code></p>
+            <p><button type="button" name="button" class='btn btn-outline-primary' v-on:click="copy_to_clipboard">Copy query to clipboard</button> <span v-if="copied">Copied!</span></p>
           </div>
         </div>
 
