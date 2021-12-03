@@ -1,0 +1,15 @@
+[v-cloak] > * {
+  display: none;
+}
+
+[v-cloak]::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 256px;
+  height: 256px;
+  background-image: url(2d243ac6ae724ba2df02.gif);
+  background-size: cover;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguY3NzIiwibWFwcGluZ3MiOiJBQUFBO0VBQWdCO0FBRWhCOztBQURBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7QUFJRixDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vbWFuZGF0b3J5LWdyYWRpbmctZ3VpZGVsaW5lcy8uL3NyYy9zdHlsZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIlt2LWNsb2FrXSA+ICogeyBkaXNwbGF5OiBub25lOyB9XHJcblt2LWNsb2FrXTo6YmVmb3JlIHtcclxuICBjb250ZW50OiBcIiBcIjtcclxuICBkaXNwbGF5OiBibG9jaztcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgd2lkdGg6IDI1NnB4O1xyXG4gIGhlaWdodDogMjU2cHg7XHJcbiAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuL2xvYWRlci5naWYnKTtcclxuICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xyXG59XHJcbiJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==*/
