@@ -108,5 +108,8 @@ var app = new Vue({
     delete_keyword: function(index) {
       this.keywords.splice(index, 1);
     }
+  },
+  created: function() {
+    document.getElementById('loading').remove()
   }
 })
