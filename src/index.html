@@ -45,11 +45,15 @@
 
             <h3>Journals</h3>
 
-            <p>Check the box below to customize journals to include in the search. By default, journals in the FT-50 are selected.</p>
+            <p>Check the box below to customize journals to include in the search.</p>
 
+            <p>By default, journals in the FT-50 are selected. But the list also
+              includes available journals from the AIS-8. Either set can be selected, and individual journals can be selected or unselected.</p>
 
-            <input type="checkbox" id="checkbox" v-model="expand_journal_list">
-            <label for="checkbox">Expand journal list</label>
+            <div class="">
+              <input type="checkbox" id="expand-journal-list" v-model="expand_journal_list">
+              <label for="expand-journal-list">Customize journal list</label>
+            </div>
 
             <div v-if="expand_journal_list">
 
@@ -79,28 +83,70 @@
           <div class="mb-3">
 
             <h3>Keywords</h3>
-            <p>Optionally, include keywords to search for. This tool will create a query that searches for papers that include the term either in the article title, abstract, or keywords.</p>
+            <p>Optionally, include keywords to search for.</p>
+            <p>This tool will create
+              a query that searches for papers that include the term in the article's <strong>title, abstract, or keywords</strong>.</p>
+
+            <p>If more than one keyword is set, then the join method can be customized (e.g., 'AND', 'OR').</p>
+
 
             <div class="">
-              <ul class="list-group" id="keywords">
-                <li class="list-group-item" v-for="(keyword, index) in keywords" :key="keyword">
-                  {{ keyword }}
-                  <button type="button" class="close" aria-label="Close" v-on:click="delete_keyword(index)">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </li>
-              </ul>
-              <form v-on:submit.prevent="add_keyword">
-                <input v-model="new_keyword" placeholder="new keyword">
-                <button
-                  :disabled="!!!new_keyword"
-                  type="submit"
-                  name="button"
-                  >Add</button>
-              </form>
+
+
+            <div class="row">
+
+              <div class="col-sm-4">
+                <ul class="list-group" id="keywords">
+                  <li class="list-group-item" v-for="(keyword, index) in keywords" :key="keyword + index">
+                    {{ keyword }}
+                    <button type="button" class="close" aria-label="Close" v-on:click="delete_keyword(index)">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </li>
+                </ul>
+
+                <form v-on:submit.prevent="add_keyword" class='my-2'>
+                  <input v-model="new_keyword" placeholder="new keyword">
+                  <button
+                    :disabled="!!!new_keyword"
+                    type="submit"
+                    name="button"
+                    >Add</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="">
+              <template v-if="keywords.length > 1">
+                <div class="">
+                  <span class='mr-2'>Keyword list join method:</span>
+                  <span class="">
+                    <input type="radio" id="keyword-and" value="AND" v-model="keyword_join">
+                    <label for="keyword-and">AND</label>
+                  </span>
+                  <span class="">
+                    <input type="radio" id="keyword-or" value="OR" v-model="keyword_join">
+                    <label for="keyword-or">OR</label>
+                  </span>
+                </div>
+              </template>
+            </div>
+
+            <div class="">
+
+              <div class="">
+                <input type="checkbox" id="show-keyword-subquery" v-model="show_keyword_bquery">
+                <label for="show-keyword-subquery">Show keyword subquery</label>
+              </div>
+
+              <div class="" v-if="show_keyword_bquery">
+                <p><code>{{ keyword_bquery }}</code></p>
+              </div>
             </div>
 
           </div>
+
+        </div>
 
 
         <div class="mb-3">
@@ -115,6 +161,7 @@
 
 
         <p> <a :href="baseurl" class='btn btn-primary'>Go to Business Source Complete</a> </p>
+        <p>You will have to authenticate through whatever means you have available.</p>
 
         <hr/>
 
@@ -134,6 +181,13 @@
           <li>The journal names in the query must exactly match ebscohost's name for that journal, with wildcard's permitted. Some journals are listed multiple times in ebscohost's database, because they have had more than one publisher over the year. This tool accounts for such journals by including `(*` at the end of the ebscohost journal name.</li>
         </ul>
 
+
+        <h3>Links</h3>
+        <ul>
+          <li><a href="https://github.com/deargle/ebscohost-query-maker/">Source-code repository on github</a> -- submit bug reports, requests, etc.</li>
+          <li><a href="https://github.com/deargle/ebscohost-query-maker/CHANGELOG.md">CHANGELOG.md</a></li>
+        </ul>
+        
       </div>
     </div>
   </body>

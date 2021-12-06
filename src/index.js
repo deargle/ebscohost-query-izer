@@ -38,7 +38,9 @@ var app = new Vue({
     expand_journal_list: false,
     filtered_journals: journals_ft_50,
     keywords: [],
-    new_keyword: ''
+    new_keyword: '',
+    keyword_join: 'AND',
+    show_keyword_bquery: false
   },
   computed: {
     filtered_journals_display_names: function() {
@@ -58,7 +60,10 @@ var app = new Vue({
       return 'https://search.ebscohost.com/login.aspx?direct=true&authtype=cookie,uid,ip&db=bth';
     },
     keyword_bquery: function() {
-      return this.keywords.map(kw => `(KW "${kw}" OR AB "${kw}" OR TI "${kw}")`).join(' AND ');
+      if (!!!this.keywords.length) {
+        return ''
+      }
+      return '(' + this.keywords.map(kw => `(KW "${kw}" OR AB "${kw}" OR TI "${kw}")`).join(` ${this.keyword_join} `) + ')';
     },
     bquery: function() {
       let elements = [];
@@ -66,7 +71,7 @@ var app = new Vue({
       if (this.keyword_bquery) {
         elements.push(this.keyword_bquery)
       }
-      
+
       if (this.journals_bquery){
         elements.push(this.journals_bquery)
       }
