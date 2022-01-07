@@ -1,8 +1,8 @@
 {
-  "name": "mandatory-grading-guidelines",
+  "name": "ebscohost-query-izer",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:deargle/mandatory-grading-guidelines.git",
+  "repository": "git@github.com:deargle/ebscohost-query-maker.git",
   "author": "Dave Eargle <dave@daveeargle.com>",
   "license": "MIT",
   "dependencies": {
